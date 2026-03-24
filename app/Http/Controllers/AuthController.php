@@ -60,5 +60,17 @@ class AuthController extends Controller
     }
 
 
-    
+    public function me()
+    {
+        // Just return the currently logged-in user
+        return response()->json(Auth::user());
+    }
+
+
+    public function logout()
+    {
+        Auth::logout();
+
+        return response()->json(['message' => 'Successfully logged out']);
+    }
 }
