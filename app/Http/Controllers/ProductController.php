@@ -26,4 +26,30 @@ class ProductController extends Controller
             'data' => $product
         ], 201);
     }
+
+    public function index()
+    {
+        $products = $this->productDAO->getAll();
+        return response()->json([
+            'status' => 'success',
+            'data' => $products
+        ]);
+    }
+
+    public function show($slug)
+    {
+        $product = $this->productDAO->findBySlug($slug);
+
+        if (!$product) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Ce produit n\'existe pas dans notre pharmacie!'
+            ], 404);
+        }
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $product
+        ]);
+    }
 }
