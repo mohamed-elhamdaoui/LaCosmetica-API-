@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\DAO\ProductDAO;
 use App\DTO\ProductDTO;
+use App\DTO\ProductUpdateDTO;
 
 class ProductController extends Controller
 {
@@ -52,4 +53,36 @@ class ProductController extends Controller
             'data' => $product
         ]);
     }
+
+
+    public function destroy($id)
+    {
+        $product = $this->productDAO->findById($id);
+
+        if (!$product) {
+            return response()->json(['message' => 'Produit non trouvé!'], 404);
+        }
+
+        $this->productDAO->delete($product);
+
+        return response()->json([
+            'message' => 'Produit et images supprimés définitivement!'
+        ]);
+    }
+
+    public function update(Request $request, $id)
+{
+    $product = $this->productDAO->findById($id);
+    if (!$product) return response()->json(['message' => 'Produit non trouvé!'], 404);
+
+    $dto = ProductUpdateDTO::fromRequest($request);
+
+
+    $updatedProduct = $this->productDAO->update($product, $dto->toArray(), $dto->images);
+
+    return response()->json([
+        'message' => 'Produit mis à jour avec succès!',
+        'data' => $updatedProduct
+    ]);
+}
 }
