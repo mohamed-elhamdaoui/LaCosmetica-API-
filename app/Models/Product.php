@@ -10,7 +10,7 @@ class Product extends Model
 {
     use HasSlug;
 
-    protected $fillable = ['name', 'slug', 'description', 'price', 'category_id'];
+    protected $fillable = ['name', 'slug', 'description', 'price', 'stock', 'category_id'];
 
     public function getSlugOptions(): SlugOptions
     {
