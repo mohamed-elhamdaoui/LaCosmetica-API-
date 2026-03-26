@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
@@ -21,5 +22,11 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('products/{id}', [ProductController::class, 'destroy']);
     Route::patch('/products/{id}', [ProductController::class, 'update']);
     // Route::get('/products', [ProductController::class, 'index']);
+
+
+    Route::post('orders', [OrderController::class, 'store']);
+
+    // (اختياري لاحقاً) عرض طلبات الزبون الحالي
+    // Route::get('orders', [OrderController::class, 'index']);
 
 });
